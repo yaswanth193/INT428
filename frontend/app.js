@@ -8,6 +8,7 @@
 /* ═══════════════════════════════════════════
    THREE.JS 3D INTRO
 ═══════════════════════════════════════════ */
+const API = "https://int428-backend.onrender.com";
 (function(){
   const canvas = document.getElementById('c3d');
   const W = ()=>window.innerWidth, H = ()=>window.innerHeight;
@@ -405,7 +406,7 @@ async function fetchPriceInsight(productName, labels, actual, predicted){
   })).filter(d => d.price);
 
   try {
-    const res = await fetch('http://localhost:5000/api/price-insight', {
+    const res = await fetch('https://int428-backend.onrender.com/api/price-insight', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ product: productName, data_points: dataPoints })
@@ -428,7 +429,7 @@ let dropProbabilityCache = {};
 
 async function fetchDropProbabilities(){
   try {
-    const res = await fetch('http://localhost:5000/api/drop-probability', {
+    const res = await fetch('https://int428-backend.onrender.com/api/drop-probability', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ products: PRODUCTS.map(p=>({id:p.id,orig:p.orig,curr:p.curr,trend:p.trend,platform:p.platform})) })
@@ -522,7 +523,7 @@ async function callNegoAPI(product, currPrice, target){
 
   const typingId = appendTypingIndicator();
   try {
-    const res = await fetch('http://localhost:5000/api/negotiate', {
+    const res = await fetch('https://int428-backend.onrender.com/api/negotiate', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ product, curr_price: currPrice, target_price: target, history: negoHistory })
@@ -612,7 +613,7 @@ async function runPromptDemo(){
   outputEl.innerHTML   = '<div class="pd-loading"><div class="typing-dots"><span></span><span></span><span></span></div><span>AI is generating response…</span></div>';
 
   try {
-    const res  = await fetch('http://localhost:5000/api/prompt-demo', {
+    const res  = await fetch('https://int428-backend.onrender.com/api/prompt-demo', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ product, technique })
@@ -676,7 +677,7 @@ async function runAISearch(){
   }));
 
   try {
-    const res  = await fetch('http://localhost:5000/api/nl-search', {
+    const res  = await fetch('https://int428-backend.onrender.com/api/nl-search', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ query, products: productList })
