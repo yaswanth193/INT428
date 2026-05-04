@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NegotiAI — AI Price Negotiator | Full Stack Expo 2026</title>
+<!-- Bootstrap 5 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<!-- NegotiAI Stylesheet -->
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- Login gate: redirect to login if not signed in -->
+<script>
+  if(!sessionStorage.getItem('negotiai_auth')){
+    window.location.replace('login.html');
+  }
+</script>
+
+<!-- ═══════════ 3D INTRO SCREEN ═══════════ -->
+<div id="intro">
+  <canvas id="c3d"></canvas>
+
+  <!-- Pulse rings -->
+  <div class="pulse-ring"></div>
+  <div class="pulse-ring"></div>
+  <div class="pulse-ring"></div>
+
+  <!-- Floating HUD chips -->
+  <div class="hud-chip c1">📉 Price Drop Detected<strong>iPhone 15 Pro · ₹4,200 off</strong></div>
+  <div class="hud-chip c2">🤖 AI Negotiating…<strong>Samsung S24 Ultra</strong></div>
+  <div class="hud-chip c3">🔔 Alert Triggered<strong>MacBook Air M3</strong></div>
+  <div class="hud-chip c4">✅ Deal Locked!<strong>You saved ₹13,499</strong></div>
+  <div class="hud-chip c5">📊 Trend Prediction<strong>Buy in 2 weeks ↓</strong></div>
+
+  <!-- Centre copy -->
+  <div class="intro-center">
+    <div class="intro-eyebrow">Full Stack Expo 2026 &nbsp;·&nbsp; BTech CSE 2nd Year</div>
+    <h1 class="intro-h1">Stop Paying<br>Full Price.<br><span class="cyan">Let AI Bargain.</span></h1>
+    <p class="intro-p">NegotiAI watches 40+ platforms, predicts price drops before they happen, and negotiates the best deal automatically.</p>
+    <button class="intro-enter" onclick="enterSite()">Explore NegotiAI &nbsp;→</button>
+  </div>
+
+  <div class="intro-hint">
+    <span>Scroll to explore</span>
+    <div class="hint-chevron"></div>
+  </div>
+</div>
+
+<!-- ═══════════ MAIN SITE ═══════════ -->
+<div id="site">
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid px-0" style="padding:0 40px;">
+    <a class="navbar-brand" href="#">🤖 NegotiAI</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="color:#999;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center" style="gap:4px;">
+        <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="#advisor">AI Advisor</a></li>
+        <li class="nav-item"><a class="nav-link" href="#demo">Live Demo</a></li>
+        <li class="nav-item"><a class="nav-link" href="#protection">Protection</a></li>
+        <!-- More dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color:#666!important;">More</a>
+          <ul class="dropdown-menu dropdown-menu-end" style="background:#111;border:1px solid #222;border-radius:6px;padding:6px;min-width:160px;">
+            <li><a class="dropdown-item nav-link" href="#alerts" style="font-size:0.8rem;padding:7px 12px;border-radius:4px;">Price Alerts</a></li>
+            <li><a class="dropdown-item nav-link" href="#trends" style="font-size:0.8rem;padding:7px 12px;border-radius:4px;">Trends</a></li>
+            <li><a class="dropdown-item nav-link" href="#features" style="font-size:0.8rem;padding:7px 12px;border-radius:4px;">Features</a></li>
+            <li><a class="dropdown-item nav-link" href="#reviews" style="font-size:0.8rem;padding:7px 12px;border-radius:4px;">Reviews</a></li>
+            <li><hr style="border-color:#222;margin:4px 8px;"/></li>
+            <li><a class="dropdown-item nav-link" href="#demo" style="font-size:0.8rem;padding:7px 12px;border-radius:4px;color:#00d4ff!important;">🤖 AI Chatbot</a></li>
+            <li><a class="dropdown-item nav-link" href="#prompt-demo" style="font-size:0.8rem;padding:7px 12px;border-radius:4px;color:#00d4ff!important;">⚡ Prompt Demo</a></li>
+          </ul>
+        </li>
+        <li class="nav-item" style="margin-left:8px;">
+          <a class="nav-link nav-signin" href="login.html">Sign In</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="hero-section">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag"><span class="hero-tag-dot"></span>Full Stack Expo 2026</div>
+      <h1>Stop paying<br>the listed price.<br><em>AI bargains for you.</em></h1>
+      <p class="sub">NegotiAI monitors 40+ platforms, predicts price drops from historical data, and automatically negotiates the best deal — you just confirm.</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-solid"><i class="fas fa-search me-2"></i>Browse Products</a>
+        <a href="#alerts" class="btn-line"><i class="fas fa-bell me-2"></i>Set Price Alert</a>
+      </div>
+      <div class="hero-badges">
+        <span class="hero-badge">BTech CSE — 2nd Year</span>
+        <span class="hero-badge">Full Stack Development</span>
+        <span class="hero-badge">HTML · CSS · JS · Python Flask</span>
+      </div>
+    </div>
+    <div class="hero-stats-panel">
+      <div class="hstat"><div class="hstat-num">₹<em>8,400</em></div><div class="hstat-lbl">Avg savings per deal</div></div>
+      <div class="hstat"><div class="hstat-num"><em>94</em>%</div><div class="hstat-lbl">Negotiation success</div></div>
+      <div class="hstat"><div class="hstat-num"><em>40</em>+</div><div class="hstat-lbl">Platforms scanned</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-inner">
+    <div class="ticker-item"><div class="ticker-dot"></div>iPhone 15 Pro dropped ₹4,200</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Samsung S24 Ultra — deal locked ₹13,499 saved</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>MacBook Air M3 — AI predicts ₹3,500 drop in 2 weeks</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Sony XM5 — 94% negotiation success rate</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>LG OLED 55" — price fell ₹8,000 overnight</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Nike Air Max — saved ₹3,795 via bundle offer</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>iPhone 15 Pro dropped ₹4,200</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Samsung S24 Ultra — deal locked ₹13,499 saved</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>MacBook Air M3 — AI predicts ₹3,500 drop in 2 weeks</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Sony XM5 — 94% negotiation success rate</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>LG OLED 55" — price fell ₹8,000 overnight</div>
+    <div class="ticker-item"><div class="ticker-dot"></div>Nike Air Max — saved ₹3,795 via bundle offer</div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-cell"><span class="num" id="sc1">₹8,400</span><span class="lbl">Avg savings per deal</span></div>
+  <div class="stat-cell"><span class="num" id="sc2">94%</span><span class="lbl">Negotiation success rate</span></div>
+  <div class="stat-cell"><span class="num" id="sc3">2.1M+</span><span class="lbl">Deals closed</span></div>
+  <div class="stat-cell"><span class="num" id="sc4">40+</span><span class="lbl">Platforms supported</span></div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products" class="sec">
+  <div class="container-fluid px-0">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Browse & Negotiate</div>
+      <h2>Find your product.<br>Let AI handle the rest.</h2>
+      <p>Search across all categories — each product shows live trend data, AI price prediction, and a one-click negotiate button.</p>
+    </div>
+    <div class="search-row reveal">
+      <div class="ai-search-toggle-row">
+        <span class="ai-search-mode-label" id="searchModeLabel">🔍 Keyword Search</span>
+        <button class="ai-toggle-btn" id="aiSearchToggle" onclick="toggleAISearch()">Switch to AI Search ✨</button>
+        <span class="ai-search-badge" id="aiSearchBadge" style="display:none;">Semantic Search · Gemini 1.5 Flash · Unit IV NLP</span>
+      </div>
+      <input type="text" id="searchInput" placeholder="Search — iPhone, Sony headphones, Samsung TV…" oninput="handleSearch()" onkeydown="if(event.key==='Escape')clearSearch()"/>
+      <button class="sbtn" onclick="handleSearch()" title="Search"><i class="fas fa-search"></i></button>
+      <button class="clrbtn" id="clearBtn" onclick="clearSearch()">✕ Clear</button>
+      <button class="ai-search-btn" id="aiSearchBtn" onclick="runAISearch()" style="display:none;">🤖 Ask AI</button>
+    </div>
+    <div class="cat-tabs reveal">
+      <div class="cat-tab active" onclick="filterCat('all',this)">All</div>
+      <div class="cat-tab" onclick="filterCat('mobile',this)">📱 Mobiles</div>
+      <div class="cat-tab" onclick="filterCat('laptop',this)">💻 Laptops</div>
+      <div class="cat-tab" onclick="filterCat('tv',this)">📺 TVs</div>
+      <div class="cat-tab" onclick="filterCat('appliance',this)">🏠 Appliances</div>
+      <div class="cat-tab" onclick="filterCat('audio',this)">🎧 Audio</div>
+      <div class="cat-tab" onclick="filterCat('fashion',this)">👟 Fashion</div>
+    </div>
+    <div class="search-info" id="searchResultInfo"></div>
+    <div class="row g-3" id="productGrid"></div>
+  </div>
+  </div>
+</section>
+
+<!-- ALERTS -->
+<section id="alerts" class="sec sec-alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Price Alerts</div>
+      <h2>Know before the price drops.</h2>
+      <p>Enter your email — NegotiAI watches your products 24/7 and notifies you instantly.</p>
+    </div>
+    <div class="alert-hero">
+      <h3>📉 Never Miss a Price Drop Again</h3>
+      <p>NegotiAI monitors price history, studies seasonal trends, and uses past data to predict when a product is about to get cheaper. Enter your email — we will notify you the moment the price moves in your favour.</p>
+      <div class="alert-form-row">
+        <input type="email" id="globalEmail" placeholder="Enter your email to track all prices…"/>
+        <button onclick="subscribeGlobal()">🔔 Subscribe to Alerts</button>
+      </div>
+      <div id="globalAlertMsg" style="margin-top:12px;font-size:0.85rem;"></div>
+    </div>
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="registered-alerts">
+          <h5><i class="fas fa-bell text-primary me-2"></i>Your Active Alerts <span id="alertCount" class="badge bg-primary ms-2">0</span></h5>
+          <div id="alertList"><p style="color:#aaa;font-size:0.88rem;text-align:center;padding:20px;">No alerts yet. Subscribe above or click "Set Alert" on any product.</p></div>
+        </div>
+      </div>
+      <div class="col-lg-5 mt-4 mt-lg-0">
+        <div class="registered-alerts">
+          <h5><i class="fas fa-history text-success me-2"></i>Recent Price Events</h5>
+          <div>
+            <div class="alert-item"><div class="a-icon">📉</div><div class="a-info"><div class="a-name">iPhone 15 Pro dropped ₹4,200</div><div class="a-email">Amazon India · 2 hrs ago</div></div><span class="a-status status-drop">DROP</span></div>
+            <div class="alert-item"><div class="a-icon">📈</div><div class="a-info"><div class="a-name">Sony WH-1000XM5 up ₹800</div><div class="a-email">Flipkart · 5 hrs ago</div></div><span class="a-status status-rise">RISE</span></div>
+            <div class="alert-item"><div class="a-icon">📉</div><div class="a-info"><div class="a-name">Samsung 55" QLED dropped ₹6,000</div><div class="a-email">Amazon India · 8 hrs ago</div></div><span class="a-status status-drop">DROP</span></div>
+            <div class="alert-item"><div class="a-icon">📉</div><div class="a-info"><div class="a-name">MacBook Air M3 dropped ₹3,500</div><div class="a-email">Apple Store · 12 hrs ago</div></div><span class="a-status status-drop">DROP</span></div>
+            <div class="alert-item"><div class="a-icon">📈</div><div class="a-info"><div class="a-name">Nike Air Max 2024 up ₹600</div><div class="a-email">Myntra · 1 day ago</div></div><span class="a-status status-rise">RISE</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TRENDS -->
+<section id="trends" class="sec">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Price Intelligence</div>
+      <h2>12 months of data.<br>AI predicts what's next.</h2>
+      <p>NegotiAI learns from historical patterns, seasonal trends, and competitor moves to tell you exactly when to buy.</p>
+    </div>
+    <div class="trend-selector">
+      <div class="trend-pill active" onclick="switchTrend('iphone',this)">iPhone 15 Pro</div>
+      <div class="trend-pill" onclick="switchTrend('samsung',this)">Samsung S24 Ultra</div>
+      <div class="trend-pill" onclick="switchTrend('macbook',this)">MacBook Air M3</div>
+      <div class="trend-pill" onclick="switchTrend('sony',this)">Sony WH-1000XM5</div>
+      <div class="trend-pill" onclick="switchTrend('lg',this)">LG 55" OLED TV</div>
+    </div>
+      <div class="chart-wrap">
+        <div class="chart-title-row">
+          <h5 id="chartProductName">iPhone 15 Pro — 12 Month Price History</h5>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:#0f3460"></span>Actual Price</span>
+            <span><span class="legend-dot" style="background:#00d4ff"></span>AI Prediction</span>
+          </div>
+        </div>
+        <canvas id="trendChart" height="90"></canvas>
+        <div class="prediction-box">
+          <div class="pred-icon">🤖</div>
+          <div class="pred-text">
+            <h6 id="predTitle">Price Predicted to Drop Next Month</h6>
+            <p id="predDesc">Based on 12-month history and festival season patterns — iPhone 15 Pro expected to drop ₹3,000–₹5,000 in the next 3–4 weeks.</p>
+          </div>
+          <div class="pred-badge" id="predBadge">📉 BUY LATER</div>
+        </div>
+        <!-- AI Insight Box — Feature 4 -->
+        <div class="ai-insight-box" id="aiInsightBox">
+          <div class="ai-insight-loading" id="aiInsightLoading">
+            <div class="insight-skeleton"></div>
+            <div class="insight-skeleton short"></div>
+          </div>
+          <div class="ai-insight-content" id="aiInsightContent" style="display:none;">
+            <div class="ai-insight-header">
+              <span class="ai-insight-icon">🧠</span>
+              <span class="ai-insight-title">AI Insight</span>
+              <span class="ai-unit-badge">Gemini 1.5 Flash · Data Analysis · Unit VI</span>
+            </div>
+            <p class="ai-insight-trend" id="aiInsightTrend"></p>
+            <p class="ai-insight-rec" id="aiInsightRec"></p>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<!-- AI NEGOTIATION CHATBOT — Feature 1 (Real AI) -->
+<section id="demo" class="sec sec-alt">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Live AI Chatbot</div>
+      <h2>Real AI negotiation.<br><em>Powered by LLaMA 3.3.</em></h2>
+      <p>Select a product, set your target price, and watch NegotiAI craft real negotiation arguments using chain-of-thought reasoning.</p>
+    </div>
+
+    <div class="ai-unit-strip">
+      <span class="unit-chip">Unit IV — NLP &amp; Chatbots</span>
+      <span class="unit-chip">Unit V — Role-based Prompting</span>
+      <span class="unit-chip">Unit V — Chain-of-Thought</span>
+      <span class="unit-chip api-chip">Groq API · LLaMA 3.3-70B · Free</span>
+    </div>
+
+    <div class="chatbot-outer reveal">
+      <div class="chatbot-left">
+        <div class="chatbot-controls">
+          <div class="ctrl-group">
+            <label>Select Product</label>
+            <select id="negoProdSelect" class="nego-select"></select>
+          </div>
+          <div class="ctrl-group">
+            <label>Your Target Price (₹)</label>
+            <input type="number" id="negoTarget" class="nego-input" placeholder="e.g. 115000"/>
+          </div>
+          <div class="nego-price-display" id="negoPriceDisplay">
+            <span>Listed at</span>
+            <strong id="negoListedPrice">—</strong>
+          </div>
+          <button class="nego-start-btn" id="negoStartBtn" onclick="startNegoChatbot()">⚡ Start AI Negotiation</button>
+          <button class="nego-copy-btn" id="negoCopyBtn" onclick="copyLastMessage()" style="display:none;">📋 Copy Negotiation Pitch</button>
+        </div>
+        <div class="nego-how">
+          <div class="how-title">How it works</div>
+          <div class="how-step"><span>1</span>AI analyzes the product's market position</div>
+          <div class="how-step"><span>2</span>Selects best negotiation tactics (CoT)</div>
+          <div class="how-step"><span>3</span>Crafts a persuasive pitch for the seller</div>
+          <div class="how-step"><span>4</span>Iterates until deal is reached</div>
+        </div>
+      </div>
+
+      <div class="chatbot-right">
+        <div class="chatbot-topbar">
+          <div class="cb-dots"><span></span><span></span><span></span></div>
+          <span class="cb-title">NegotiAI Chatbot — Groq LLaMA 3.3-70B</span>
+          <span class="cb-status" id="cbStatus">Ready</span>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+          <div class="cb-welcome">
+            <div class="cb-welcome-icon">🤖</div>
+            <p>Select a product and your target price to begin real AI-powered negotiation.</p>
+            <p style="font-size:0.75rem;color:#555;margin-top:8px;">Uses chain-of-thought reasoning · Role-based system prompt · INT428 Unit V</p>
+          </div>
+        </div>
+        <div class="chatbot-input-row">
+          <input type="text" id="chatbotInput" class="chatbot-text-input" placeholder="Continue the negotiation…" onkeydown="if(event.key==='Enter')sendNegoMessage()"/>
+          <button class="chatbot-send-btn" onclick="sendNegoMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMPT ENGINEERING SHOWCASE — Feature 2 -->
+<section id="prompt-demo" class="sec">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Prompt Engineering</div>
+      <h2>Same question.<br><em>Three different prompts.</em></h2>
+      <p>This demonstrates how Zero-shot, Few-shot, and Chain-of-Thought prompting produce different quality outputs from the same AI model.</p>
+    </div>
+
+    <div class="ai-unit-strip">
+      <span class="unit-chip">Unit V — Prompt Engineering</span>
+      <span class="unit-chip">Unit V — Prompt Patterns</span>
+      <span class="unit-chip">Unit V — LLMs</span>
+      <span class="unit-chip api-chip">Groq API · LLaMA 3.3-70B · Free</span>
+    </div>
+
+    <div class="pd-product-row reveal">
+      <label>Choose a product for the demo:</label>
+      <select id="pdProductSelect" class="nego-select" style="max-width:300px;">
+        <option>iPhone 15 Pro 128GB</option>
+        <option>Samsung Galaxy S24 Ultra</option>
+        <option>MacBook Air M3</option>
+        <option>Sony WH-1000XM5</option>
+        <option>LG 55" C3 OLED TV</option>
+      </select>
+    </div>
+
+    <div class="pd-tabs reveal">
+      <button class="pd-tab active" onclick="selectPDTab('zero-shot',this)">Zero-shot</button>
+      <button class="pd-tab" onclick="selectPDTab('few-shot',this)">Few-shot</button>
+      <button class="pd-tab" onclick="selectPDTab('cot',this)">Chain-of-Thought</button>
+    </div>
+
+    <div class="pd-body reveal">
+      <div class="pd-explain" id="pdExplain">
+        <strong>Zero-shot</strong> — The model gets only the question with no examples or instructions. Tests the model's base knowledge.
+      </div>
+      <div class="pd-two-col">
+        <div class="pd-col">
+          <div class="pd-col-header">📤 Prompt Sent to AI</div>
+          <pre class="pd-prompt-code" id="pdPromptCode">Click "Run Prompt" to see the prompt</pre>
+        </div>
+        <div class="pd-col">
+          <div class="pd-col-header">📥 AI Output</div>
+          <div class="pd-output" id="pdOutput">
+            <div class="pd-placeholder">Click the button below to run this prompt technique live and see the AI response.</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px;">
+        <button class="nego-start-btn" id="pdRunBtn" onclick="runPromptDemo()" style="max-width:260px;">▶ Run Prompt Live</button>
+      </div>
+      <div class="pd-label">This demonstrates how different prompt techniques produce different quality and depth of outputs — INT428 Unit V: Prompt Engineering</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<!-- AI PRODUCT ADVISOR -->
+<section id="advisor" class="sec">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow" style="color:var(--mint);">AI Product Advisor</div>
+      <h2 style="color:white;">Not sure what to buy?<br>Tell us. <em style="color:var(--mint);">We'll decide.</em></h2>
+      <p style="color:#666;">Enter your budget, interests, and what you need it for — NegotiAI analyses hundreds of products and recommends the best options for you personally.</p>
+    </div>
+
+    <div class="adv-wizard">
+      <!-- Progress bar -->
+      <div class="adv-progress">
+        <div class="adv-step-dot active" id="advDot1">01 · Category</div>
+        <div class="adv-step-dot" id="advDot2">02 · Budget</div>
+        <div class="adv-step-dot" id="advDot3">03 · Features</div>
+        <div class="adv-step-dot" id="advDot4">04 · Use Case</div>
+        <div class="adv-step-dot" id="advDot5">05 · Results</div>
+      </div>
+
+      <div id="advWizardInner">
+        <!-- Step 1: Category -->
+        <div class="adv-panel active" id="advPanel1">
+          <div class="adv-q">What kind of product are you looking for?</div>
+          <div class="adv-hint">Select one category — phones, laptops, appliances, beauty products, anything.</div>
+          <div class="adv-cat-grid" id="advCatGrid"></div>
+          <div class="adv-nav">
+            <button class="adv-next" onclick="advGoTo(2)">Next — Set Budget →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Budget -->
+        <div class="adv-panel" id="advPanel2">
+          <div class="adv-q">What is your budget?</div>
+          <div class="adv-hint">Drag the slider — we will only recommend products within your range.</div>
+          <div class="adv-budget-wrap">
+            <div class="budget-display" id="advBudgetDisplay">₹50,000<span class="bd-label">Your maximum spend</span></div>
+            <input type="range" class="adv-slider" id="advBudgetSlider" min="500" max="300000" value="50000" step="500"/>
+            <div class="budget-labels"><span>₹500</span><span>₹50,000</span><span>₹1,00,000</span><span>₹2,00,000</span><span>₹3,00,000</span></div>
+          </div>
+          <div class="adv-nav">
+            <button class="adv-back" onclick="advGoTo(1)">← Back</button>
+            <button class="adv-next" onclick="advGoTo(3)">Next — Pick Features →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Features -->
+        <div class="adv-panel" id="advPanel3">
+          <div class="adv-q">What matters most to you?</div>
+          <div class="adv-hint">Select all that apply — camera, battery, gaming, travel, ladies use, anything. The more you pick, the better the match.</div>
+          <div class="adv-chips" id="advFeatureWrap"></div>
+          <div class="adv-nav">
+            <button class="adv-back" onclick="advGoTo(2)">← Back</button>
+            <button class="adv-next" onclick="advGoTo(4)">Next — Describe Your Use →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Use Case (free text) -->
+        <div class="adv-panel" id="advPanel4">
+          <div class="adv-q">Tell us more — in your own words.</div>
+          <div class="adv-hint">Examples: "I travel a lot and need something lightweight for video calls", "My wife wants a hair dryer for salon-style blowouts", "I want to play BGMI and watch Netflix on weekends"</div>
+          <textarea class="adv-usecase" id="advUsecase" placeholder="Describe what you need this product for, who will use it, and any specific requirements you have…"></textarea>
+          <div class="adv-nav">
+            <button class="adv-back" onclick="advGoTo(3)">← Back</button>
+            <button class="adv-analyze" onclick="startAnalysis()">🤖 Analyse & Recommend →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading screen -->
+      <div class="adv-loading" id="advLoading">
+        <div class="adv-spinner"></div>
+        <h4>Analysing your preferences…</h4>
+        <div class="adv-loading-steps">
+          <div class="adv-ls"><span class="adv-ls-dot"></span>Scanning your preferences</div>
+          <div class="adv-ls"><span class="adv-ls-dot"></span>Analysing 500+ products</div>
+          <div class="adv-ls"><span class="adv-ls-dot"></span>Matching features to your needs</div>
+          <div class="adv-ls"><span class="adv-ls-dot"></span>Comparing prices across 40 platforms</div>
+          <div class="adv-ls"><span class="adv-ls-dot"></span>Generating personalised recommendations</div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="adv-results" id="advResults"></div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="sec sec-dark">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Capabilities</div>
+      <h2>Everything working<br>in your favour.</h2>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card"><span class="feat-icon">📡</span><div class="feat-title">Real-Time Market Scan</div><div class="feat-desc">Scans Amazon, Flipkart, OLX, eBay and 40+ platforms simultaneously for live prices.</div></div>
+      <div class="feat-card"><span class="feat-icon">🔔</span><div class="feat-title">Smart Price Alerts</div><div class="feat-desc">24/7 monitoring with instant email notification when your product drops in price.</div></div>
+      <div class="feat-card"><span class="feat-icon">📊</span><div class="feat-title">Trend Prediction</div><div class="feat-desc">12 months of historical data trains the model to predict the best time to buy.</div></div>
+      <div class="feat-card"><span class="feat-icon">💬</span><div class="feat-title">Smart Negotiation</div><div class="feat-desc">NLP-powered messages adapted to each seller — urgency, bundles, competitor anchors.</div></div>
+      <div class="feat-card"><span class="feat-icon">📦</span><div class="feat-title">Bulk Deal Engine</div><div class="feat-desc">Auto-unlocks quantity discounts that individual buyers never think to ask for.</div></div>
+      <div class="feat-card"><span class="feat-icon">🔐</span><div class="feat-title">Budget Shield</div><div class="feat-desc">Hard limits mean NegotiAI never commits above your maximum spend. Ever.</div></div>
+      <div class="feat-card"><span class="feat-icon">🔄</span><div class="feat-title">Adaptive Strategy</div><div class="feat-desc">Reads seller replies in real time and adjusts — escalates, concedes, or bundles.</div></div>
+      <div class="feat-card"><span class="feat-icon">🤝</span><div class="feat-title">Win-Win Engine</div><div class="feat-desc">Designed so both buyer and seller benefit — every deal builds long-term trust.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BUYER PROTECTION CENTER -->
+<section id="protection" class="sec">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Buyer Protection</div>
+      <h2>We've got your back,<br>every step of the way.</h2>
+      <p>Damaged delivery? Wrong item? Seller not responding? File a complaint, verify your order, track disputes — all in one place.</p>
+    </div>
+
+    <!-- Protection guarantee badges -->
+    <div class="protection-badges reveal" style="margin-bottom:36px;">
+      <div class="pb" style="border-color:rgba(0,200,150,0.3);color:var(--mint);"><span class="pb-dot"></span>100% Purchase Protection</div>
+      <div class="pb" style="border-color:rgba(0,200,150,0.3);color:var(--mint);"><span class="pb-dot"></span>7-Day Return Window</div>
+      <div class="pb" style="border-color:rgba(0,200,150,0.3);color:var(--mint);"><span class="pb-dot"></span>Instant Dispute Filing</div>
+      <div class="pb" style="border-color:rgba(0,200,150,0.3);color:var(--mint);"><span class="pb-dot"></span>Verified Deal Records</div>
+      <div class="pb" style="border-color:rgba(0,200,150,0.3);color:var(--mint);"><span class="pb-dot"></span>AI-Assisted Complaints</div>
+    </div>
+
+    <!-- TABS -->
+    <div class="protect-tabs reveal">
+      <button class="protect-tab active" onclick="showTab('orders',this)"><span class="pt-icon">📦</span> My Orders</button>
+      <button class="protect-tab" onclick="showTab('verify',this)"><span class="pt-icon">🔍</span> Verify Order</button>
+      <button class="protect-tab" onclick="showTab('complaint',this)"><span class="pt-icon">⚠️</span> File Complaint</button>
+      <button class="protect-tab" onclick="showTab('disputes',this)"><span class="pt-icon">⚖️</span> Disputes</button>
+      <button class="protect-tab" onclick="showTab('refund',this)"><span class="pt-icon">💰</span> Refund Request</button>
+    </div>
+
+    <!-- ── TAB 1: MY ORDERS ── -->
+    <div class="protect-panel active" id="tab-orders">
+      <div id="ordersContainer"></div>
+    </div>
+
+    <!-- ── TAB 2: VERIFY ORDER ── -->
+    <div class="protect-panel" id="tab-verify">
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:28px;margin-bottom:24px;">
+        <h5 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:4px;">🔍 10-Point Order Verification</h5>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:22px;">Complete all 10 checks to verify your delivered order is genuine and matches what you negotiated.</p>
+
+        <!-- Order selector -->
+        <div class="form-group" style="max-width:400px;margin-bottom:24px;">
+          <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Select Order to Verify</label>
+          <select id="verifyOrderSelect" class="form-control" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;font-size:0.88rem;outline:none;" onchange="resetVerification()">
+            <option value="">— Choose an order —</option>
+            <option value="ORD-2024-001">ORD-2024-001 · Samsung Galaxy S24 Ultra</option>
+            <option value="ORD-2024-002">ORD-2024-002 · MacBook Air M3</option>
+            <option value="ORD-2024-003">ORD-2024-003 · Sony WH-1000XM5</option>
+            <option value="ORD-2024-004">ORD-2024-004 · Nike Air Max 2024</option>
+          </select>
+        </div>
+
+        <div class="verify-steps" id="verifySteps">
+          <div class="vstep" id="vs1"><div class="vstep-num">1</div><div class="vstep-title">Package Seal Intact</div><div class="vstep-desc">Check that the original manufacturer seal has not been opened or tampered with.</div><div class="vstep-action"><button onclick="markStep(1,'pass')" id="vbtn1">Mark as OK</button></div></div>
+          <div class="vstep" id="vs2"><div class="vstep-num">2</div><div class="vstep-title">Serial Number Match</div><div class="vstep-desc">Compare the serial number on the box with the one on the device or invoice.</div><div class="vstep-action"><button onclick="markStep(2,'pass')" id="vbtn2" disabled>Confirm Match</button></div></div>
+          <div class="vstep" id="vs3"><div class="vstep-num">3</div><div class="vstep-title">Product Condition</div><div class="vstep-desc">Inspect for scratches, dents, broken parts, or signs of prior use.</div><div class="vstep-action"><button onclick="markStep(3,'pass')" id="vbtn3" disabled>No Damage Found</button></div></div>
+          <div class="vstep" id="vs4"><div class="vstep-num">4</div><div class="vstep-title">All Accessories Present</div><div class="vstep-desc">Check charger, cable, manual, warranty card and any box inserts are included.</div><div class="vstep-action"><button onclick="markStep(4,'pass')" id="vbtn4" disabled>All Items Present</button></div></div>
+          <div class="vstep" id="vs5"><div class="vstep-num">5</div><div class="vstep-title">Invoice & Price Check</div><div class="vstep-desc">Confirm invoice shows the negotiated price — not the original MRP.</div><div class="vstep-action"><button onclick="markStep(5,'pass')" id="vbtn5" disabled>Price Confirmed</button></div></div>
+          <div class="vstep" id="vs6"><div class="vstep-num">6</div><div class="vstep-title">Correct Model/Variant</div><div class="vstep-desc">Verify storage size, colour, and model number exactly match your order.</div><div class="vstep-action"><button onclick="markStep(6,'pass')" id="vbtn6" disabled>Correct Variant</button></div></div>
+          <div class="vstep" id="vs7"><div class="vstep-num">7</div><div class="vstep-title">Device Powers On</div><div class="vstep-desc">Switch the product on, confirm it boots normally and shows no error screen.</div><div class="vstep-action"><button onclick="markStep(7,'pass')" id="vbtn7" disabled>Device OK</button></div></div>
+          <div class="vstep" id="vs8"><div class="vstep-num">8</div><div class="vstep-title">Warranty Registration</div><div class="vstep-desc">Confirm the warranty card is blank/unused and the device is still under active warranty.</div><div class="vstep-action"><button onclick="markStep(8,'pass')" id="vbtn8" disabled>Warranty Valid</button></div></div>
+          <div class="vstep" id="vs9"><div class="vstep-num">9</div><div class="vstep-title">Seller Authenticity</div><div class="vstep-desc">Cross-check seller name and rating on the platform matches the verified seller in your deal.</div><div class="vstep-action"><button onclick="markStep(9,'pass')" id="vbtn9" disabled>Seller Verified</button></div></div>
+          <div class="vstep" id="vs10"><div class="vstep-num">10</div><div class="vstep-title">NegotiAI Deal Match</div><div class="vstep-desc">Confirm delivery matches the product, price, and seller locked by NegotiAI.</div><div class="vstep-action"><button onclick="markStep(10,'pass')" id="vbtn10" disabled>Deal Matches</button></div></div>
+        </div>
+
+        <div id="verifyProgress" style="margin-top:16px;font-size:0.82rem;color:var(--muted);">Select an order above to begin verification.</div>
+        <div class="verify-result" id="verifyResult"></div>
+        <button id="reportFailBtn" style="display:none;margin-top:12px;" class="oa-btn danger" onclick="showTab('complaint',document.querySelector('.protect-tab:nth-child(3)'))">⚠️ Report an Issue with this Order</button>
+      </div>
+    </div>
+
+    <!-- ── TAB 3: FILE COMPLAINT ── -->
+    <div class="protect-panel" id="tab-complaint">
+      <div class="complaint-form">
+        <h5>⚠️ File a Complaint</h5>
+        <p class="sub">Received a damaged, wrong, or missing item? Tell us — our team reviews every complaint within 24 hours.</p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Order ID *</label>
+              <input type="text" id="cOrderId" class="form-control" placeholder="e.g. ORD-2024-001" style="border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;"/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Your Email *</label>
+              <input type="email" id="cEmail" class="form-control" placeholder="yourname@email.com" style="border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;"/>
+            </div>
+          </div>
+        </div>
+
+        <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:10px;">Issue Type * <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(select all that apply)</span></label>
+        <div class="issue-type-grid" id="issueTypeGrid">
+          <div class="issue-chip" onclick="toggleIssue(this,'damaged')"><span class="ic-icon">💔</span>Damaged Product</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'wrong')"><span class="ic-icon">❌</span>Wrong Item Sent</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'missing')"><span class="ic-icon">📭</span>Missing Parts</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'fake')"><span class="ic-icon">🚫</span>Counterfeit Item</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'price')"><span class="ic-icon">💸</span>Wrong Price Charged</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'noshow')"><span class="ic-icon">🕳️</span>Never Delivered</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'seller')"><span class="ic-icon">🙅</span>Seller Not Responding</div>
+          <div class="issue-chip" onclick="toggleIssue(this,'other')"><span class="ic-icon">📝</span>Other Issue</div>
+        </div>
+        <div id="issueErr" style="font-size:0.78rem;color:#dc2626;margin-bottom:10px;display:none;">⚠️ Please select at least one issue type.</div>
+
+        <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;">Severity Level *</label>
+        <div class="severity-bar">
+          <button class="sev-btn low" onclick="setSeverity('low',this)">🟡 Low — Minor issue</button>
+          <button class="sev-btn med" onclick="setSeverity('med',this)">🟠 Medium — Significant problem</button>
+          <button class="sev-btn high" onclick="setSeverity('high',this)">🔴 High — Urgent / Fraud</button>
+        </div>
+
+        <div class="form-group">
+          <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Describe the Problem *</label>
+          <textarea id="cDesc" class="form-control" rows="4" placeholder="Describe exactly what happened — what did you receive, what was wrong, and when did you notice it?" style="border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;resize:vertical;"></textarea>
+        </div>
+
+        <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:8px;">Upload Photos / Evidence</label>
+        <div class="photo-upload" id="photoUpload">
+          <input type="file" accept="image/*" multiple id="photoInput" onchange="handlePhotos(event)"/>
+          <div class="pu-icon">📸</div>
+          <p><strong>Click to upload</strong> or drag and drop photos of the damaged / wrong item</p>
+          <p style="font-size:0.72rem;margin-top:4px;">JPG, PNG up to 5MB each · Max 6 photos</p>
+        </div>
+        <div class="photo-preview" id="photoPreview">
+          <div class="preview-placeholder">📷</div>
+          <div class="preview-placeholder">📷</div>
+          <div class="preview-placeholder">📷</div>
+        </div>
+
+        <div id="cErr" style="font-size:0.8rem;color:#dc2626;margin-bottom:10px;display:none;"></div>
+        <button class="submit-review-btn" onclick="submitComplaint()" style="background:var(--accent);">🚨 Submit Complaint</button>
+
+        <!-- Complaint timeline (shown after submission) -->
+        <div id="complaintTimeline" style="display:none;margin-top:28px;">
+          <h6 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:16px;">📋 Complaint #<span id="cTicketId"></span> — Status</h6>
+          <div class="complaint-timeline">
+            <div class="ct-item"><div class="ct-dot done">✓</div><div class="ct-info"><div class="ct-title">Complaint Received</div><div class="ct-time" id="ct1time"></div></div></div>
+            <div class="ct-item"><div class="ct-dot active">⟳</div><div class="ct-info"><div class="ct-title">Under Review by NegotiAI Team</div><div class="ct-time">Expected within 24 hours</div></div></div>
+            <div class="ct-item"><div class="ct-dot pending">3</div><div class="ct-info"><div class="ct-title">Seller Contacted</div><div class="ct-time">Pending</div></div></div>
+            <div class="ct-item"><div class="ct-dot pending">4</div><div class="ct-info"><div class="ct-title">Resolution Offered</div><div class="ct-time">Pending</div></div></div>
+            <div class="ct-item"><div class="ct-dot pending">5</div><div class="ct-info"><div class="ct-title">Case Closed</div><div class="ct-time">Pending</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB 4: DISPUTES ── -->
+    <div class="protect-panel" id="tab-disputes">
+      <div id="disputeContainer"></div>
+    </div>
+
+    <!-- ── TAB 5: REFUND REQUEST ── -->
+    <div class="protect-panel" id="tab-refund">
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:28px;">
+        <h5 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:4px;">💰 Request a Refund</h5>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:22px;">NegotiAI protects every buyer. Refund requests are processed within 5–7 business days.</p>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Order ID *</label>
+              <input type="text" id="rOrderId" class="form-control" placeholder="e.g. ORD-2024-001" style="border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;"/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Refund Amount (₹) *</label>
+              <input type="number" id="rAmount" class="form-control" placeholder="Enter amount to refund" style="border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;"/>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Refund To *</label>
+              <select id="rMethod" class="form-control" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;font-size:0.88rem;outline:none;">
+                <option value="">— Select refund method —</option>
+                <option>Original payment method</option>
+                <option>Bank account (NEFT)</option>
+                <option>UPI / PhonePe / GPay</option>
+                <option>NegotiAI wallet credits</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Reason for Refund *</label>
+              <select id="rReason" class="form-control" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;font-size:0.88rem;outline:none;">
+                <option value="">— Select reason —</option>
+                <option>Damaged product received</option>
+                <option>Wrong item delivered</option>
+                <option>Item never arrived</option>
+                <option>Product not as described</option>
+                <option>Duplicate payment</option>
+                <option>Changed mind (within return window)</option>
+                <option>Seller cancelled order</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Additional Notes</label>
+              <textarea id="rNotes" class="form-control" rows="3" placeholder="Any additional information to help process your refund faster..." style="border:1.5px solid var(--border);border-radius:5px;font-family:'Manrope',sans-serif;resize:vertical;"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div id="rErr" style="font-size:0.8rem;color:#dc2626;margin:10px 0;display:none;"></div>
+        <button class="submit-review-btn" onclick="submitRefund()" style="margin-top:8px;">💰 Submit Refund Request</button>
+        <div id="refundSuccess" style="display:none;background:#dcfce7;border:1px solid #16a34a;color:#16a34a;border-radius:5px;padding:14px 16px;font-weight:600;font-size:0.85rem;margin-top:14px;"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Reviews</div>
+      <h2>Real people.<br>Real savings.</h2>
+      <p>Read what others saved — or share your own experience below.</p>
+    </div>
+
+    <!-- REVIEW SUBMISSION FORM -->
+    <div class="review-form-card reveal">
+      <h4>✍️ Write a Review</h4>
+      <p>Used NegotiAI? Tell others how much you saved and what you think.</p>
+
+      <div class="star-picker" id="starPicker">
+        <input type="radio" id="s5" name="rating" value="5"/><label for="s5" title="5 stars">★</label>
+        <input type="radio" id="s4" name="rating" value="4"/><label for="s4" title="4 stars">★</label>
+        <input type="radio" id="s3" name="rating" value="3"/><label for="s3" title="3 stars">★</label>
+        <input type="radio" id="s2" name="rating" value="2"/><label for="s2" title="2 stars">★</label>
+        <input type="radio" id="s1" name="rating" value="1"/><label for="s1" title="1 star">★</label>
+      </div>
+      <div id="starError" style="font-size:0.8rem;color:#e74c3c;margin-bottom:10px;display:none;">⚠️ Please select a star rating.</div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="reviewName" placeholder="e.g. Arjun Verma"/>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Your Role / City</label>
+            <input type="text" id="reviewRole" placeholder="e.g. Student, Delhi"/>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Product Negotiated</label>
+            <input type="text" id="reviewProduct" placeholder="e.g. iPhone 15 Pro"/>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Amount Saved (₹)</label>
+            <input type="number" id="reviewSaved" placeholder="e.g. 8500"/>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label>Your Review *</label>
+            <textarea id="reviewText" placeholder="Tell us about your experience — how did NegotiAI help you?"></textarea>
+          </div>
+        </div>
+      </div>
+      <button class="submit-review-btn" onclick="submitReview()">🚀 Submit Review</button>
+      <div class="review-success" id="reviewSuccess">🎉 Thank you! Your review has been posted successfully.</div>
+    </div>
+
+    <!-- REVIEWS DISPLAY -->
+    <div class="row g-4" id="reviewsGrid">
+      <!-- Pre-loaded reviews rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="fb-logo">🤖 Negoti<span>AI</span></div>
+      <p>An AI-powered price negotiation system that fights for the best deal on your behalf across 40+ online marketplaces.</p>
+    </div>
+    <div class="footer-col">
+      <h6>NAVIGATE</h6>
+      <ul>
+        <li><a href="#products">Browse Products</a></li>
+        <li><a href="#alerts">Price Alerts</a></li>
+        <li><a href="#trends">Price Trends</a></li>
+        <li><a href="#demo">Live Demo</a></li>
+        <li><a href="#advisor">AI Advisor</a></li>
+        <li><a href="#protection">Buyer Protection</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h6>FEATURES</h6>
+      <ul>
+        <li><a href="#features">Market Scan</a></li>
+        <li><a href="#features">Smart Negotiation</a></li>
+        <li><a href="#features">Trend Prediction</a></li>
+        <li><a href="#features">Bulk Deals</a></li>
+        <li><a href="#features">Budget Protection</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h6>PROJECT INFO</h6>
+      <ul>
+        <li><a href="#">BTech CSE — 2nd Year</a></li>
+        <li><a href="#">Full Stack Development</a></li>
+        <li><a href="#">Full Stack Expo 2026</a></li>
+        <li><a href="#">HTML · CSS · JS · Bootstrap</a></li>
+        <li><a href="#">Python Flask Backend</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Built by <span>BTech 2nd Year Students</span> — CSE Dept. &nbsp;·&nbsp; <span>Full Stack Expo 2026</span> &nbsp;·&nbsp; <span>NegotiAI</span></p>
+    <p style="margin-top:6px;">HTML · CSS · JavaScript · Bootstrap 5 · Chart.js · Three.js · Python Flask (Backend)</p>
+  </div>
+</footer>
+
+</div><!-- #site -->
+
+
+<!-- ALERT MODAL -->
+
+<!-- Scripts -->
+
+<!-- Back To Top -->
+<button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Toast Notifications -->
+<div id="toastContainer" class="notif-toast"></div>
+
+<!-- Price Alert Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">🔔 Set Price Alert</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:28px;">
+        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">
+          Get an email notification the moment the price drops or NegotiAI predicts it will.
+        </p>
+        <input type="hidden" id="modalProduct"/>
+        <div style="margin-bottom:14px;">
+          <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Your Email Address</label>
+          <input type="email" id="modalEmail" class="form-control" placeholder="yourname@email.com"
+            style="border:1.5px solid var(--border);border-radius:5px;font-family:Manrope,sans-serif;"/>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Alert me when:</label>
+          <select id="alertType" class="form-select"
+            style="font-size:0.88rem;border:1.5px solid var(--border);border-radius:5px;font-family:Manrope,sans-serif;">
+            <option value="any">Any price change</option>
+            <option value="drop">Price drops only</option>
+            <option value="target">Price hits my target</option>
+            <option value="predict">AI predicts a drop is coming</option>
+          </select>
+        </div>
+        <div id="targetPriceRow" style="display:none;margin-bottom:14px;">
+          <label style="font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;">Target Price (₹)</label>
+          <input type="number" id="targetPrice" class="form-control" placeholder="e.g. 80000"
+            style="border:1.5px solid var(--border);border-radius:5px;font-family:Manrope,sans-serif;"/>
+        </div>
+        <div id="modalMsg" style="font-size:0.85rem;margin-bottom:8px;"></div>
+        <button class="btn-solid" style="width:100%;padding:13px;font-size:0.9rem;" onclick="confirmAlert()">
+          🔔 Activate Alert
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CDN Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<!-- NegotiAI Application Scripts -->
+<script src="advisor.js"></script>
+<script src="app.js"></script>
+
+
+</body>
+</html>

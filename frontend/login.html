@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NegotiAI — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100%;}
+:root{
+  --cream:#F5F0E8;--cream2:#EDE7D9;--ink:#1C1A17;
+  --muted:#7A7060;--border:#D8D0C0;
+  --sienna:#C4531A;--forest:#2D6A4F;--cobalt:#1B4F8A;
+  --saffron:#E8A020;--rose:#C0446A;--teal:#1D7A6B;
+}
+body{font-family:"DM Sans",sans-serif;background:linear-gradient(135deg,#f0e8d8 0%,#e8dfc8 40%,#dfe8f0 100%);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;position:relative;}
+.page{position:relative;z-index:10;width:100%;height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+.lpanel{display:flex;flex-direction:column;justify-content:space-between;padding:44px 52px;border-right:1px solid var(--border);}
+.brand{display:flex;align-items:center;gap:10px;}
+.bmark{width:34px;height:34px;border-radius:7px;background:var(--sienna);display:flex;align-items:center;justify-content:center;
+  font-family:"Playfair Display",serif;font-weight:900;font-size:15px;color:#fff;box-shadow:0 3px 12px rgba(196,83,26,0.35);}
+.bname{font-family:"Playfair Display",serif;font-weight:700;font-size:1.05rem;letter-spacing:-.01em;color:var(--ink);}
+.bname em{font-style:normal;color:var(--sienna);}
+.lbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding:36px 0;}
+.eyebrow{font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--sienna);margin-bottom:16px;}
+.headline{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,2.6vw,2.8rem);font-weight:900;
+  line-height:1.1;letter-spacing:-.03em;color:var(--ink);margin-bottom:18px;}
+.headline em{font-style:italic;color:var(--sienna);}
+.tagline{font-size:.86rem;color:var(--muted);line-height:1.8;max-width:300px;margin-bottom:32px;}
+.stats{display:flex;gap:24px;}
+.st{display:flex;flex-direction:column;gap:2px;}
+.stn{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:900;color:var(--ink);letter-spacing:-.02em;}
+.stn span{color:var(--sienna);font-size:.85em;}
+.stl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+.lfoot{display:flex;justify-content:space-between;align-items:center;}
+.swatches{display:flex;gap:7px;}
+.sw{width:20px;height:20px;border-radius:50%;transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
+.sw:hover{transform:scale(1.6);}
+.lfootnote{font-size:.68rem;color:var(--border);}
+.rpanel{display:flex;align-items:center;justify-content:center;padding:40px 52px;background:rgba(252,249,243,.55);}
+.fcard{width:100%;max-width:372px;position:relative;animation:riseIn .6s cubic-bezier(.16,1,.3,1) both;opacity:0;transform:translateY(22px);}
+@keyframes riseIn{to{opacity:1;transform:none;}}
+.ftitle{font-family:"Playfair Display",serif;font-size:1.55rem;font-weight:900;letter-spacing:-.02em;color:var(--ink);margin-bottom:4px;}
+.fsub{font-size:.78rem;color:var(--muted);margin-bottom:24px;line-height:1.6;}
+.tabs{display:flex;background:var(--cream2);border:1px solid var(--border);border-radius:9px;padding:3px;margin-bottom:20px;gap:3px;}
+.tb{flex:1;padding:9px 6px;border:none;background:transparent;font-family:"DM Sans",sans-serif;
+  font-size:.73rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);border-radius:6px;transition:all .16s;}
+.tb.on{background:#fff;color:var(--ink);box-shadow:0 1px 5px rgba(0,0,0,.07);}
+.emsg{border-radius:7px;padding:9px 12px;font-size:.76rem;margin-bottom:13px;display:none;animation:shake .35s ease;}
+.emsg.bad{background:#FEF0EE;border:1px solid rgba(196,83,26,.25);color:var(--sienna);}
+.emsg.good{background:#EEF6F1;border:1px solid rgba(45,106,79,.3);color:var(--forest);}
+@keyframes shake{0%,100%{transform:translateX(0)}25%,75%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:5px;}
+.iw{position:relative;}
+.field input{width:100%;padding:11px 38px 11px 13px;background:#fff;border:1.5px solid var(--border);
+  border-radius:8px;font-family:"DM Sans",sans-serif;font-size:.86rem;color:var(--ink);
+  outline:none;transition:border-color .18s,box-shadow .18s;}
+.field input::placeholder{color:#C2BBB0;}
+.field input:focus{border-color:var(--sienna);box-shadow:0 0 0 3px rgba(196,83,26,.09);}
+.field input.ok{border-color:var(--forest);}
+.field input.ng{border-color:var(--sienna);}
+.ico{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--border);pointer-events:none;transition:color .18s;}
+.field input:focus~.ico,.field input.ok~.ico{color:var(--forest);}
+.eyebtn{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;
+  font-size:.85rem;color:var(--border);padding:0;line-height:1;transition:color .15s;}
+.eyebtn:hover{color:var(--muted);}
+.strw{display:none;margin-top:5px;}
+.strbars{display:flex;gap:3px;}
+.sb{flex:1;height:2px;border-radius:2px;background:var(--border);transition:background .3s;}
+.strl{font-size:.63rem;color:var(--muted);margin-top:3px;}
+.frow{display:flex;justify-content:flex-end;margin-top:-3px;margin-bottom:16px;}
+.frow a{font-size:.72rem;color:var(--muted);text-decoration:none;transition:color .15s;}
+.frow a:hover{color:var(--sienna);}
+.sbtn{width:100%;padding:12px;background:var(--sienna);border:none;border-radius:8px;
+  font-family:"DM Sans",sans-serif;font-size:.86rem;font-weight:600;color:#fff;
+  position:relative;overflow:hidden;
+  transition:background .18s,transform .12s,box-shadow .18s;
+  box-shadow:0 4px 16px rgba(196,83,26,.28);letter-spacing:.02em;}
+.sbtn::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);pointer-events:none;}
+.sbtn:hover{background:#B8481A;transform:translateY(-1px);box-shadow:0 6px 22px rgba(196,83,26,.38);}
+.sbtn:active{transform:none;}
+.sbtn.ld{opacity:.7;pointer-events:none;}
+.sbtn .bt{transition:opacity .15s;}
+.sbtn.ld .bt{opacity:0;}
+.sbtn .bsp{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:17px;height:17px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
+  border-radius:50%;animation:sp .7s linear infinite;}
+.sbtn.ld .bsp{display:block;}
+@keyframes sp{to{transform:translate(-50%,-50%) rotate(360deg);}}
+.div{display:flex;align-items:center;gap:11px;margin:16px 0;}
+.div::before,.div::after{content:"";flex:1;height:1px;background:var(--border);}
+.div span{font-size:.64rem;color:var(--border);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;}
+.socg{display:flex;flex-direction:column;gap:7px;}
+.socb{width:100%;padding:10px 14px;background:#fff;border:1.5px solid var(--border);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"DM Sans",sans-serif;font-size:.8rem;font-weight:500;color:var(--ink);
+  transition:all .16s;}
+.socb:hover{border-color:var(--ink);background:var(--cream);transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.06);}
+.socb svg{width:16px;height:16px;flex-shrink:0;}
+.socrow{display:flex;gap:7px;}
+.socrow .socb{flex:1;}
+.ffoot{text-align:center;margin-top:18px;font-size:.72rem;color:var(--muted);}
+.ffoot a{color:var(--sienna);text-decoration:none;font-weight:600;}
+.ffoot a:hover{text-decoration:underline;text-underline-offset:2px;}
+.terms{font-size:.63rem;color:var(--border);text-align:center;margin-top:11px;line-height:1.7;}
+.terms a{color:var(--muted);text-decoration:underline;text-underline-offset:2px;}
+.sov{position:absolute;inset:0;background:rgba(245,240,232,.93);border-radius:14px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .4s;z-index:20;backdrop-filter:blur(6px);}
+.sov.on{opacity:1;pointer-events:all;}
+.sic{width:56px;height:56px;border-radius:50%;background:var(--forest);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;
+  margin-bottom:12px;animation:pop .5s cubic-bezier(.16,1,.3,1);}
+@keyframes pop{from{transform:scale(.4);opacity:0;}}
+.smsg{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;color:var(--forest);}
+.ssub{font-size:.76rem;color:var(--muted);margin-top:4px;}
+.phrow{display:flex;gap:7px;}
+.phrow select{width:82px;flex-shrink:0;padding:11px 7px;border:1.5px solid var(--border);
+  border-radius:8px;font-family:"DM Sans",sans-serif;font-size:.8rem;
+  background:#fff;color:var(--ink);outline:none;transition:border-color .18s;}
+.phrow select:focus{border-color:var(--sienna);}
+.otpg{display:flex;gap:6px;margin-bottom:8px;}
+.otpg input{flex:1;text-align:center;padding:10px 3px;font-size:1rem;font-weight:700;}
+.rrow{font-size:.71rem;color:var(--muted);margin-bottom:14px;}
+.rrow a{color:var(--sienna);text-decoration:none;font-weight:600;}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-8px);
+  background:var(--ink);color:#fff;border-radius:7px;padding:10px 18px;
+  font-size:.78rem;z-index:9999;opacity:0;transition:all .28s;
+  white-space:nowrap;pointer-events:none;box-shadow:0 5px 18px rgba(0,0,0,.18);}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.g{background:var(--forest);}
+@media(max-width:780px){.page{grid-template-columns:1fr;}.lpanel{display:none;}.rpanel{padding:28px 24px;}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="page">
+  <div class="lpanel">
+    <div class="brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <div class="bmark">N</div>
+        <div class="bname">Negoti<em>AI</em></div>
+      </a>
+    </div>
+    <div class="lbody">
+      <div class="eyebrow">Full Stack Expo 2026</div>
+      <h1 class="headline">Stop paying<br>full price.<br><em>Let AI bargain.</em></h1>
+      <p class="tagline">NegotiAI monitors 40+ platforms, predicts price drops, and negotiates the best deal — you just confirm.</p>
+      <div class="stats">
+        <div class="st"><div class="stn">₹8,400<span>+</span></div><div class="stl">Avg savings</div></div>
+        <div class="st"><div class="stn">94<span>%</span></div><div class="stl">Success rate</div></div>
+        <div class="st"><div class="stn">40<span>+</span></div><div class="stl">Platforms</div></div>
+      </div>
+    </div>
+    <div class="lfoot">
+      <div class="swatches">
+        <div class="sw" style="background:#C4531A;"></div>
+        <div class="sw" style="background:#2D6A4F;"></div>
+        <div class="sw" style="background:#1B4F8A;"></div>
+        <div class="sw" style="background:#E8A020;"></div>
+        <div class="sw" style="background:#C0446A;"></div>
+        <div class="sw" style="background:#1D7A6B;"></div>
+      </div>
+      <div class="lfootnote">BTech CSE &middot; 2nd Year</div>
+    </div>
+  </div>
+  <div class="rpanel">
+    <div class="fcard">
+      <div class="ftitle">Welcome back.</div>
+      <div class="fsub">Sign in to continue negotiating smarter.</div>
+      <div class="tabs">
+        <button class="tb on" onclick="swTab('email',this)">&#9993; Email</button>
+        <button class="tb" onclick="swTab('phone',this)">&#128241; Phone</button>
+      </div>
+      <div class="emsg" id="em"></div>
+      <div id="eP">
+        <div class="field">
+          <label>Email address</label>
+          <div class="iw">
+            <input type="email" id="eml" placeholder="you@example.com" autocomplete="email" oninput="vEml(this)"/>
+            <span class="ico" id="eico">@</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <div class="iw">
+            <input type="password" id="pwd" placeholder="Your password" autocomplete="current-password" oninput="chkStr(this)"/>
+            <button class="eyebtn" onclick="togEye('pwd',this)" type="button">&#128065;</button>
+          </div>
+          <div class="strw" id="strw">
+            <div class="strbars">
+              <div class="sb" id="sb1"></div><div class="sb" id="sb2"></div>
+              <div class="sb" id="sb3"></div><div class="sb" id="sb4"></div>
+            </div>
+            <div class="strl" id="strl"></div>
+          </div>
+        </div>
+        <div class="frow"><a href="#" onclick="fgtPwd(event)">Forgot password?</a></div>
+        <button class="sbtn" onclick="doEml()" id="eBtn">
+          <span class="bt">Sign in &rarr;</span><div class="bsp"></div>
+        </button>
+      </div>
+      <div id="phP" style="display:none;">
+        <div class="field">
+          <label>Mobile number</label>
+          <div class="iw phrow">
+            <select id="cc">
+              <option>&#127470;&#127475; +91</option>
+              <option>&#127482;&#127480; +1</option>
+              <option>&#127468;&#127463; +44</option>
+              <option>&#127462;&#127466; +971</option>
+            </select>
+            <input type="tel" id="ph" placeholder="10-digit number" oninput="vPh(this)" style="flex:1;border-radius:0 8px 8px 0;border-left:none;"/>
+          </div>
+        </div>
+        <div id="otpSec" style="display:none;">
+          <div class="field">
+            <label>Enter OTP</label>
+            <div class="otpg">
+              <input type="text" maxlength="1" class="od" oninput="oNext(this,0)" onkeydown="oBk(event,0)"/>
+              <input type="text" maxlength="1" class="od" oninput="oNext(this,1)" onkeydown="oBk(event,1)"/>
+              <input type="text" maxlength="1" class="od" oninput="oNext(this,2)" onkeydown="oBk(event,2)"/>
+              <input type="text" maxlength="1" class="od" oninput="oNext(this,3)" onkeydown="oBk(event,3)"/>
+              <input type="text" maxlength="1" class="od" oninput="oNext(this,4)" onkeydown="oBk(event,4)"/>
+              <input type="text" maxlength="1" class="od" oninput="oNext(this,5)" onkeydown="oBk(event,5)"/>
+            </div>
+          </div>
+          <div class="rrow">Didn't receive it? <a href="#" onclick="reOtp(event)">Resend OTP</a></div>
+        </div>
+        <button class="sbtn" onclick="doPh()" id="phBtn">
+          <span class="bt" id="phBt">Send OTP &rarr;</span><div class="bsp"></div>
+        </button>
+      </div>
+      <div class="div"><span>or sign in with</span></div>
+      <div class="socg">
+        <button class="socb" onclick="doSoc('Google')">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+        <div class="socrow">
+          <button class="socb" onclick="doSoc('Apple')">
+            <svg viewBox="0 0 24 24" fill="#1C1A17"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.56-1.32 3.1-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            Apple
+          </button>
+          <button class="socb" onclick="doSoc('GitHub')">
+            <svg viewBox="0 0 24 24" fill="#1C1A17"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            GitHub
+          </button>
+        </div>
+      </div>
+      <div class="ffoot">No account? <a href="#" onclick="sgUp(event)">Create one free &rarr;</a></div>
+      <div class="ffoot" style="margin-top:8px;">&larr; <a href="index.html">Back to NegotiAI</a></div>
+      <div class="terms">By continuing you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></div>
+      <div class="sov" id="sov">
+        <div class="sic">&#10003;</div>
+        <div class="smsg">Signed in!</div>
+        <div class="ssub">Redirecting to NegotiAI&hellip;</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function swTab(tab,el){
+  document.querySelectorAll(".tb").forEach(function(b){b.classList.remove("on");});
+  el.classList.add("on");
+  document.getElementById("eP").style.display=tab==="email"?"block":"none";
+  document.getElementById("phP").style.display=tab==="phone"?"block":"none";
+  hideE();
+}
+function showE(msg,ok){
+  var e=document.getElementById("em");e.textContent=msg;
+  e.className="emsg "+(ok?"good":"bad");e.style.display="block";
+}
+function hideE(){document.getElementById("em").style.display="none";}
+function showToast(msg,g){
+  var t=document.getElementById("toast");t.textContent=msg;
+  t.className="toast on"+(g?" g":"");
+  setTimeout(function(){t.classList.remove("on");},3000);
+}
+function vEml(inp){
+  var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value);
+  inp.classList.toggle("ok",ok);inp.classList.toggle("ng",!ok&&inp.value.length>4);
+  var ico=document.getElementById("eico");ico.textContent=ok?"\u2713":"@";
+  ico.style.color=ok?"var(--forest)":"";
+}
+function chkStr(inp){
+  var v=inp.value,w=document.getElementById("strw");
+  if(!v){w.style.display="none";return;}w.style.display="block";
+  var s=0;
+  if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;
+  var cols=["#C4531A","#E8A020","#1D7A6B","#2D6A4F"],labs=["Weak","Fair","Good","Strong"];
+  [1,2,3,4].forEach(function(i){document.getElementById("sb"+i).style.background=i<=s?cols[s-1]:"var(--border)";});
+  document.getElementById("strl").textContent=labs[s-1]||"";
+  document.getElementById("strl").style.color=cols[s-1]||"";
+}
+function togEye(id,btn){
+  var i=document.getElementById(id);i.type=i.type==="password"?"text":"password";
+  btn.textContent=i.type==="password"?"\uD83D\uDC41":"\uD83D\uDE48";
+}
+function doEml(){
+  var em=document.getElementById("eml").value.trim();
+  var pw=document.getElementById("pwd").value;hideE();
+  if(!em||!pw){showE("Please fill in both fields.");return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showE("Enter a valid email address.");return;}
+  var btn=document.getElementById("eBtn");btn.classList.add("ld");
+  setTimeout(function(){btn.classList.remove("ld");document.getElementById("sov").classList.add("on");setTimeout(function(){sessionStorage.setItem("negotiai_auth","1");window.location.href="index.html";},1400);},1800);
+}
+var otpSent=false;
+function vPh(inp){inp.classList.toggle("ok",/^[6-9]\d{9}$/.test(inp.value));}
+function doPh(){
+  var ph=document.getElementById("ph").value.trim();
+  var btn=document.getElementById("phBtn");hideE();
+  if(!otpSent){
+    if(!/^[6-9]\d{9}$/.test(ph)){showE("Enter a valid 10-digit number.");return;}
+    btn.classList.add("ld");
+    setTimeout(function(){
+      btn.classList.remove("ld");
+      document.getElementById("otpSec").style.display="block";
+      document.getElementById("phBt").textContent="Verify OTP \u2192";
+      otpSent=true;document.querySelector(".od").focus();
+      showToast("OTP sent to +91 "+ph,true);
+    },1400);
+  }else{
+    var code=[].slice.call(document.querySelectorAll(".od")).map(function(i){return i.value;}).join("");
+    if(code.length<6){showE("Enter the complete 6-digit OTP.");return;}
+    btn.classList.add("ld");
+    setTimeout(function(){btn.classList.remove("ld");document.getElementById("sov").classList.add("on");sessionStorage.setItem("negotiai_auth","1");setTimeout(function(){window.location.href="index.html";},1400);},1400);
+  }
+}
+function oNext(inp,idx){inp.value=inp.value.replace(/\D/g,"");if(inp.value){var n=document.querySelectorAll(".od")[idx+1];if(n)n.focus();}}
+function oBk(e,idx){if(e.key==="Backspace"){var c=document.querySelectorAll(".od")[idx];if(!c.value){var p=document.querySelectorAll(".od")[idx-1];if(p){p.value="";p.focus();}}}}
+function reOtp(e){
+  e.preventDefault();document.querySelectorAll(".od").forEach(function(i){i.value="";});
+  document.querySelector(".od").focus();
+  e.target.textContent="Sent \u2713";e.target.style.color="var(--forest)";
+  setTimeout(function(){e.target.textContent="Resend OTP";e.target.style.color="";},2500);
+}
+function doSoc(p){showToast("Connecting to "+p+"...");setTimeout(function(){document.getElementById("sov").classList.add("on");setTimeout(function(){sessionStorage.setItem("negotiai_auth","1");window.location.href="index.html";},1400);},1700);}
+function fgtPwd(e){
+  e.preventDefault();var em=document.getElementById("eml").value.trim();
+  if(!em||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showE("Enter your email above first.");return;}
+  showE("Reset link sent to "+em,true);
+}
+function sgUp(e){e.preventDefault();sessionStorage.setItem("negotiai_auth","1");showToast("Redirecting...");setTimeout(function(){window.location.href="index.html";},1200);}
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Enter")return;
+  if(document.getElementById("eP").style.display!=="none")doEml();else doPh();
+});
+</script>
+</body>
+</html>
