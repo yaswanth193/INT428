@@ -379,6 +379,3 @@ def drop_probability():
 
     except Exception as e:
         return jsonify({"results": [], "ok": False, "error": str(e)}), 200
-
-
-# ═══════════════════════════════════════════════════════════
