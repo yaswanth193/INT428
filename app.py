@@ -16,6 +16,10 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/")
+def home():
+    return "Backend is running!"
+
 GROQ_API_KEY    = os.getenv("GROQ_API_KEY", "")
 GEMINI_API_KEY  = os.getenv("GEMINI_API_KEY", "")
 
@@ -378,9 +382,3 @@ def drop_probability():
 
 
 # ═══════════════════════════════════════════════════════════
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
-
-@app.route("/")
-def home():
-    return "Backend is running!"
